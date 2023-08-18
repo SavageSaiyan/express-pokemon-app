@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
 
-const pokemon = required('./models/pokemon.js')
+const pokemon = require('./models/pokemon');
+
+app.set("views", __dirname + "/views");
+app.set("view engine", "jsx");
+app.engine("jsx", require("express-react-views").createEngine())
+
 
 app.get('/', (req, res)=>{
     res.send('Welcome to the Pokemon App!');
@@ -9,7 +14,7 @@ app.get('/', (req, res)=>{
 
 
 app.get('/pokemon', (req, res)=>{
-    res.send(pokemon)
+    res.render('Index')
 })
 
 app.listen(3000, (req, res)=>{
