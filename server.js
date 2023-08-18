@@ -1,22 +1,22 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
-const pokemon = require('./models/pokemon');
+const pokemon = require("./models/pokemon");
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "jsx");
-app.engine("jsx", require("express-react-views").createEngine())
+app.engine("jsx", require("express-react-views").createEngine());
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Pokemon App!");
+});
 
-app.get('/', (req, res)=>{
-    res.send('Welcome to the Pokemon App!');
-})
+app.get("/pokemon", (req, res) => {
+  res.render("Index", {
+    pokemon: pokemon,
+  });
+});
 
-
-app.get('/pokemon', (req, res)=>{
-    res.render('Index')
-})
-
-app.listen(3000, (req, res)=>{
-    console.log('listening')
-})
+app.listen(3000, (req, res) => {
+  console.log("listening");
+});
