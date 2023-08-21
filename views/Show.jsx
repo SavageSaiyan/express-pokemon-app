@@ -7,6 +7,8 @@ const myStyle = {
 
 
 
+
+
 function Show({pokemon}) {
       console.log(pokemon.img + '.jpg')
   return (

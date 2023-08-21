@@ -2,7 +2,12 @@ import React from 'react'
 
 const myStyle = {
     color: 'red',
-    backgroundColor:'lightgreen'
+    backgroundColor:'lightgreen',
+   display: 'flex',
+   flexDirection: 'column',
+   alignItems: 'center',
+   justifyContent: 'center',
+
 };
 
 
@@ -11,6 +16,9 @@ function Index({pokemon}) {
   return (
     <div style={myStyle}>
         <h1>See All The Pokemon!</h1>
+        <nav>
+            <a href="/pokemon/new">Create New Pokemon</a>
+        </nav>
         {
             pokemon.map((pokemon, i)=> {
                 return (
