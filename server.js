@@ -1,12 +1,24 @@
 const express = require("express");
+require('dotenv').config();
 const app = express();
+const Pokemon = require("./models/pokemon.js");
+const mongoose = require('mongoose')
 
-const pokemon = require("./models/pokemon");
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "jsx");
 app.engine("jsx", require("express-react-views").createEngine());
 
+// CONNECT WITH MONGOOSE
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // remove useCreateIndex: true
+  });
+  
+  mongoose.connection.once("open", () => {
+    console.log("connected to mongoDB");
+  });
 
 //MIDDLEWARE
 app.use((req, res, next)=>{
@@ -17,14 +29,15 @@ app.use((req, res, next)=>{
 app.use(express.urlencoded({extended: false}))
 
 
-
+//ROUTES
 app.get("/", (req, res) => {
   res.send("Welcome to the Pokemon App!");
 });
 //Index
-app.get("/pokemon", (req, res) => {
+app.get("/pokemon", async function (req, res) {
+    const foundPokemon = await Pokemon.find({});
   res.render("Index", {
-    pokemon: pokemon,
+    pokemon: foundPokemon,
   });
 });
 
@@ -35,19 +48,22 @@ app.get('/pokemon/new', (req, res)=>{
 })
 
 //CREATE = POST
-app.post('/pokemon', (req, res)=>{
-  const newPokemon = {
+app.post('/pokemon', async (req, res)=>{
+  const newPokemon =  await Pokemon.create({
     name: req.body.name,
     img: "https://img.pokemondb.net/artwork/" + req.body.name.toLowerCase()
-  }
-    pokemon.push(newPokemon)
-    res.redirect('/pokemon')
-})
+  })
+    
+    console.log(newPokemon);
+  //pokemon.push(newPokemon)
+    res.redirect('/pokemon');
+});
 
 //Show
-app.get("/pokemon/:id", (req, res) => {
+app.get("/pokemon/:id", async (req, res) => {
+    const onePokemon = await Pokemon.findById(req.params.id);
     res.render("Show", {
-      pokemon: pokemon[req.params.id],
+      pokemon: onePokemon,
     });
   });
 

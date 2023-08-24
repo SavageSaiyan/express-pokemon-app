@@ -24,6 +24,7 @@ function New() {
           
            <input type="submit" value="create pokemon" /> <br />
         </form>
+        <a href='/pokemon'>Pokemon</a>
     </div>
   )
 }

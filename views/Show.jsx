@@ -17,7 +17,8 @@ function Show({pokemon}) {
         <h2>{pokemon.name}</h2>
         <img src={pokemon.img + '.jpg'}/>
        
-        <a href='/pokemon'>back</a>
+        <a href='/pokemon'>Pokemon</a>
+        <a href="/pokemon/new">Create New Pokemon</a>
     </div>
   )
 }
